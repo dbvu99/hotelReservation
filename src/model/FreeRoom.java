@@ -5,7 +5,7 @@ public class FreeRoom extends Room {
         super(roomNumber, 0.0, enumeration);
     }
 
-    @Override
+@Override
     public String toString() {
         return "";
     }
