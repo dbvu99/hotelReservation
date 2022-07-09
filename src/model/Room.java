@@ -33,6 +33,11 @@ public class Room implements  IRoom {
 
     @Override
     public String toString() {
-        return "";
+        return String.format(
+                "Room{roomNumber='%s', price='%s', enumeration='%s'}",
+                roomNumber,
+                price,
+                enumeration
+            );
     }
 }
