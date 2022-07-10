@@ -9,8 +9,12 @@ public class CustomerService {
 
     private static Collection<Customer> customers = new ArrayList<Customer>();
 
+    public static CustomerService getInstance() {
+        return new CustomerService();
+    }
 
-    public static void addCustomer(String email, String firstName, String lastName) {
+
+    public  void addCustomer(String email, String firstName, String lastName) {
 
         try {
             Customer newCustomer = new Customer(email, firstName, lastName);
@@ -20,7 +24,7 @@ public class CustomerService {
         }
     }
 
-    public static Customer getCustomer(String customerEmail)  {
+    public  Customer getCustomer(String customerEmail)  {
         for (int i = 0; i < customers.size(); i++) {
 
             if (((ArrayList<Customer>) customers).get(i).getEmail().equals(customerEmail)) {
@@ -30,7 +34,7 @@ public class CustomerService {
         return null;
     }
 
-    public static Collection<Customer> getAllCustomers() {
+    public  Collection<Customer> getAllCustomers() {
         return customers;
     }
 
