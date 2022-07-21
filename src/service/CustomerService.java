@@ -13,9 +13,7 @@ public class CustomerService {
         return new CustomerService();
     }
 
-
     public  void addCustomer(String email, String firstName, String lastName) {
-
         try {
             Customer newCustomer = new Customer(email, firstName, lastName);
             customers.add(newCustomer);

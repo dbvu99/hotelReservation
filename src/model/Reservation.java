@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Reservation {
     private Customer customer;
@@ -15,6 +15,14 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
     }
 
+    public boolean isAvailable(Date checkInDate, Date checkOutDate) {
+        return (checkOutDate.before(this.checkInDate) || checkInDate.after(this.checkOutDate));
+    }
+
+    public IRoom getRoom() {
+        return this.room;
+    }
+
     @Override
     public String toString() {
         return String.format(
@@ -25,4 +33,7 @@ public class Reservation {
                 checkOutDate.toString()
             );
     }
+
+
+
 }
