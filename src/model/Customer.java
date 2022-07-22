@@ -28,8 +28,21 @@ public class Customer {
                 "Customer{firstName='%s', lastName='%s', email='%s'}",
                 firstName,
                 lastName,
-                email
-            );
+                email);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Customer) {
+            Customer other = (Customer) obj;
+            return this.email.equals(other.email);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return email.hashCode();
     }
 
     public String getEmail() {

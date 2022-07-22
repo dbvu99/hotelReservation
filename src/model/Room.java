@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Date;
-
 public class Room implements  IRoom {
     private String roomNumber;
     private Double price;

@@ -7,7 +7,7 @@ import model.Customer;
 
 public class CustomerService {
 
-    private static Collection<Customer> customers = new ArrayList<Customer>();
+    private static final ArrayList<Customer> CUSTOMERS = new ArrayList<Customer>();
 
     public static CustomerService getInstance() {
         return new CustomerService();
@@ -16,24 +16,25 @@ public class CustomerService {
     public  void addCustomer(String email, String firstName, String lastName) {
         try {
             Customer newCustomer = new Customer(email, firstName, lastName);
-            customers.add(newCustomer);
+            CUSTOMERS.add(newCustomer);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public  Customer getCustomer(String customerEmail)  {
-        for (int i = 0; i < customers.size(); i++) {
+        for (int i = 0; i < CUSTOMERS.size(); i++) {
 
-            if (((ArrayList<Customer>) customers).get(i).getEmail().equals(customerEmail)) {
-                return ((ArrayList<Customer>) customers).get(i);
+            if (CUSTOMERS.get(i).getEmail().equals(customerEmail)) {
+                return CUSTOMERS.get(i);
             }
         }
         return null;
     }
 
     public  Collection<Customer> getAllCustomers() {
-        return customers;
+        return CUSTOMERS;
     }
+
 
 }
