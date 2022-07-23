@@ -16,7 +16,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
     private Date checkOutDate = null;
     private ArrayList<IRoom> availableRooms = new ArrayList<>(0);
 
-    private final String DATE_FORMAT_PATTERN = "m/d/yyyy";
+    private final String DATE_FORMAT_PATTERN = "M/d/yyyy";
     private final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT_PATTERN);
 
     public FindAndReserveARoomMenu() {
@@ -32,8 +32,14 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
             return;
         }
 
+        if (checkInDate.after(checkOutDate)) {
+            System.out.println("- Check in date must be before check out date.");
+            System.out.println("");
+            return;
+        }
+
         if (availableRooms.size() == 0) {
-            System.out.println("No rooms are available for the specified dates.");
+            System.out.println("- No rooms are available for the specified dates.");
             return;
         }
 
@@ -85,11 +91,11 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                 switch (choice) {
                     case 1:
                         try {
-                            System.out.print("Enter a check-in date (m/d/yyyy): ");
+                            System.out.print("Enter a check-in date (M/d/yyyy): ");
                             scanner = new Scanner(System.in);
                             String ciDate = scanner.nextLine();
                             checkInDate = DATE_FORMATTER.parse(ciDate);
-                            System.out.println("You have selected " + ciDate + " as your check-in date.");
+                            System.out.println("You have selected " + checkInDate + " as your check-in date.");
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                             displayInValidDateFeedback();
@@ -97,11 +103,11 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                         break;
                     case 2:
                         try {
-                            System.out.print("Enter a check-out date (m/d/yyyy): ");
+                            System.out.print("Enter a check-out date (M/d/yyyy): ");
                             scanner = new Scanner(System.in);
                             String coDate = scanner.nextLine();
                             checkOutDate = DATE_FORMATTER.parse(coDate);
-                            System.out.println("You have selected " + coDate + " as your check-out date.");
+                            System.out.println("You have selected " + checkOutDate + " as your check-out date.");
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                             displayInValidDateFeedback();
