@@ -4,16 +4,17 @@ import java.util.Scanner;
 
 import api.HotelResource;
 import model.IMenu;
+import model.Menu;
 
-public class CreateAccountMenu implements IMenu {
+public class CreateAccountMenu extends Menu implements IMenu {
 
     private String firstName = "";
     private String lastName  = "";
     private String email = "";
-    private boolean isRunning = true;
+
 
     public CreateAccountMenu() {
-        this.isRunning = true;
+        super();
     }
 
     public void displayForm() {
