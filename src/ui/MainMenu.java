@@ -12,7 +12,6 @@ public class MainMenu {
         while(isRunning) {
 
             try {
-            
                 System.out.println("1. Find and reserve a room");
                 System.out.println("2. See my reservations");
                 System.out.println("3. Create an account");
@@ -25,6 +24,8 @@ public class MainMenu {
                 int choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
+                        FindAndReserveARoomMenu findAndReserveARoomMenu = new FindAndReserveARoomMenu();
+                        findAndReserveARoomMenu.run(scanner);
                         break;
                     case 2:
                         printMyReservationsMenu(scanner);
