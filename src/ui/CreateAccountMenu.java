@@ -68,13 +68,13 @@ public class CreateAccountMenu extends Menu implements IMenu {
                     case 4:
                         try {
                             HotelResource.getInstance().createACustomer(firstName, lastName, email);
+                            firstName = "";
+                            lastName = "";
+                            email = "";
                             System.out.println("-------------------------------------");
                             System.out.println("| Succesfully created your account! |");
                             System.out.println("-------------------------------------");
                             System.out.println("");
-                            firstName = "";
-                            lastName = "";
-                            email = "";
                         } catch (IllegalArgumentException e) {
                             System.out.println(e.getMessage());
 
@@ -91,19 +91,12 @@ public class CreateAccountMenu extends Menu implements IMenu {
                         System.out.println("");
                         break;
                     default:
-                        System.out.println("-------------------------------------");
-                        System.out.println("| Invalid choice, please try again! |");
-                        System.out.println("-------------------------------------");
-                        System.out.println("");
+                        displayInvalidChoiceFeedback();
                         break;
                 }
 
             } catch (Exception e) {
-                // System.out.println(e.getMessage());
-                System.out.println("---------------------------------");
-                System.out.println("| INVALID INPUT!!!! Try again! |");
-                System.out.println("---------------------------------");
-                System.out.println("");
+                displayErroredInputFeedback();
             }
         }
     }
