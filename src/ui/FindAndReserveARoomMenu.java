@@ -58,8 +58,8 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
         displayAvailbleRooms();
 
         System.out.println("Select an option below:");
-        System.out.println("1. Enter a check-in date");
-        System.out.println("2. Enter a check-out date");
+        System.out.println("1. Edit the check-in date");
+        System.out.println("2. Edit the check-out date");
         System.out.println("3. Reserve a room");
         System.out.println("5. Go back to the main menu");
         System.out.println("________________________________________________");
