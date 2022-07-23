@@ -15,8 +15,12 @@ public class HotelResource {
 
     }
 
-    public void createACustomer(String email, String firstName, String lastName) {
-        CustomerService.getInstance().addCustomer(email, firstName, lastName);
+    public void createACustomer(String firstName, String lastName, String email) {
+        try {
+            CustomerService.getInstance().addCustomer(firstName, lastName, email);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     public IRoom getARoom(String roomId) {
@@ -33,6 +37,10 @@ public class HotelResource {
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         return ReservationService.getInstance().findRooms(checkInDate, checkOutDate);
+    }
+
+    public static HotelResource getInstance() {
+        return new HotelResource();
     }
 
 

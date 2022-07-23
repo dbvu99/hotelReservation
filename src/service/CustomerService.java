@@ -13,12 +13,12 @@ public class CustomerService {
         return new CustomerService();
     }
 
-    public  void addCustomer(String email, String firstName, String lastName) {
+    public  void addCustomer(String firstName, String lastName, String email) {
         try {
-            Customer newCustomer = new Customer(email, firstName, lastName);
+            Customer newCustomer = new Customer(firstName, lastName, email);
             CUSTOMERS.add(newCustomer);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -29,7 +29,8 @@ public class CustomerService {
                 return CUSTOMERS.get(i);
             }
         }
-        return null;
+
+        throw new IllegalArgumentException("Customer with email " + customerEmail + " does not exist.");
     }
 
     public  Collection<Customer> getAllCustomers() {

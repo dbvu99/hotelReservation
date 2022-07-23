@@ -37,8 +37,13 @@ public class Room implements  IRoom {
                 "Room{roomNumber='%s', price='%s', enumeration='%s'}",
                 roomNumber,
                 price,
-                enumeration
-            );
+                enumeration);
+    }
+    
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(roomNumber);
     }
 
 }

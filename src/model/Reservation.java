@@ -15,7 +15,7 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
     }
 
-    public boolean isAvailable(Date checkInDate, Date checkOutDate) {
+    public boolean isNotOverlapped(Date checkInDate, Date checkOutDate) {
         return (checkOutDate.before(this.checkInDate) || checkInDate.after(this.checkOutDate));
     }
 

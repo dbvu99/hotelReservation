@@ -3,6 +3,8 @@ package service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.Customer;
 import model.IRoom;
@@ -12,10 +14,26 @@ public class ReservationService {
 
     private static final ArrayList<IRoom> ROOMS = new ArrayList<IRoom>();
     private static final ArrayList<Reservation> RESERVATIONS = new ArrayList<Reservation>();
+    private static final HashMap<IRoom, ArrayList<Reservation>> RESERVATIONS_BY_ROOM = new HashMap<IRoom, ArrayList<Reservation>>();
 
 
     public static ReservationService getInstance() {
         return new ReservationService();
+    }
+
+    public  HashMap<IRoom, ArrayList<Reservation>> getReservationsByAllRooms() {
+        return RESERVATIONS_BY_ROOM;
+    }
+
+    public ArrayList<Reservation> getAllReserviations() {
+
+        ArrayList<Reservation> allReservations = new ArrayList<Reservation>();
+
+        RESERVATIONS_BY_ROOM.forEach((key, value) -> {
+           allReservations.addAll(value);
+        });
+
+        return allReservations;
     }
 
     public Collection<IRoom> getAllRooms() {
@@ -48,6 +66,15 @@ public class ReservationService {
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
         RESERVATIONS.add(reservation);
+
+        if (RESERVATIONS_BY_ROOM.containsKey(room)) {
+            RESERVATIONS_BY_ROOM.get(room).add(reservation);
+        } else {
+            ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+            reservations.add(reservation);
+            RESERVATIONS_BY_ROOM.put(room, reservations);
+        }
+
         return reservation;
     }
 
@@ -69,10 +96,9 @@ public class ReservationService {
         ArrayList<IRoom> availableRooms = new ArrayList<IRoom>();
 
         for (int i = 0; i < RESERVATIONS.size(); i++) {
-            if (RESERVATIONS.get(i).isAvailable(checkInDate, checkOutDate)) {
+            if (RESERVATIONS.get(i).isNotOverlapped(checkInDate, checkOutDate)) {
                 availableRooms.add(RESERVATIONS.get(i).getRoom());
             }
-
         }
         
         return availableRooms;
