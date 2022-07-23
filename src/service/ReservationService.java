@@ -41,7 +41,11 @@ public class ReservationService {
     }
 
     public void addRoom(IRoom room) {
-        ROOMS.add(room);
+        try {
+            ROOMS.add(room);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
     }
 
     public ArrayList<Reservation> getReserviations() {
@@ -93,7 +97,13 @@ public class ReservationService {
             throw new IllegalArgumentException("Check-in date must happen before check-out date");
         }
 
-        ArrayList<IRoom> availableRooms = new ArrayList<IRoom>();
+
+        ArrayList<IRoom> availableRooms = new ArrayList<IRoom>(0);
+
+
+        if (ROOMS.isEmpty()) {
+            return availableRooms;
+        }
 
         for (int i = 0; i < RESERVATIONS.size(); i++) {
             if (RESERVATIONS.get(i).isNotOverlapped(checkInDate, checkOutDate)) {

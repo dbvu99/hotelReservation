@@ -18,7 +18,7 @@ public class MainMenu {
                 System.out.println("4. Admin");
                 System.out.println("5. Exit");
                 System.out.println("________________________________________________");
-                System.out.print("Enter your choice: ");
+                System.out.print("Enter your option: ");
 
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
@@ -35,7 +35,8 @@ public class MainMenu {
                         menu.run(scanner);
                         break;
                     case 4:
-                        printAdminMenu(scanner);
+                        AdminMenu adminMenu = new AdminMenu();
+                        adminMenu.run(scanner);
                         break;
                     case 5:
                         isRunning = false;
@@ -43,8 +44,6 @@ public class MainMenu {
                         break;
                     default:
                         System.out.println("Invalid choice, please try again!");
-                        choice = 0;
-                        displayHome();
                         break;
                 }
 

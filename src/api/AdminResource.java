@@ -5,6 +5,8 @@ import java.util.List;
 
 import model.Customer;
 import model.IRoom;
+import model.Room;
+import model.RoomType;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -18,11 +20,12 @@ public class AdminResource {
         return CustomerService.getInstance().getCustomer(customerEmail);
     }
 
-    public void addRoom(List<IRoom> rooms) {
+    public void addRooms(List<IRoom> rooms) {
         for (IRoom room : rooms) {
             ReservationService.getInstance().addRoom(room);
         }
     }
+
 
     public Collection<IRoom> getAllRooms() {
         return ReservationService.getInstance().getAllRooms();
@@ -34,5 +37,15 @@ public class AdminResource {
 
     public void displayAllReservations() {
         System.out.println(ReservationService.getInstance().getReserviations().toString());
+    }
+
+    public void addOneRoom(String roomNumber, double roomCost, RoomType enumuration) {
+        try {
+            ReservationService.getInstance().addRoom(new Room(roomNumber, roomCost, enumuration));
+            System.out.println("Room added successfully");
+            System.out.println("");
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
     }
 }

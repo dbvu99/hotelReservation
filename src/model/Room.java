@@ -6,9 +6,14 @@ public class Room implements  IRoom {
     private RoomType enumeration;
 
     public Room(String roomNumber, Double price, RoomType enumeration) {
-        this.roomNumber = roomNumber;
-        this.price = price;
-        this.enumeration = enumeration;
+        try {
+            this.roomNumber = roomNumber;
+            this.price = price;
+            this.enumeration = enumeration;
+        }
+        catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override

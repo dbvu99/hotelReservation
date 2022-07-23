@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import api.HotelResource;
 import model.IMenu;
 import model.IRoom;
 import model.Menu;
+import service.ReservationService;
 
 public class FindAndReserveARoomMenu extends Menu implements IMenu {
 
@@ -38,6 +40,8 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
             return;
         }
 
+        HotelResource.getInstance().findRooms(checkInDate, checkOutDate);
+
         if (availableRooms.size() == 0) {
             System.out.println("- No rooms are available for the specified dates.");
             return;
@@ -51,6 +55,11 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
     }
 
     private void displayMenu() {
+
+        if (ReservationService.getInstance().getAllRooms().size() == 0) {
+            System.out.println("");
+            System.out.println("There is no room in the hotel. Please go to the Admin menu to add a room first.");
+        }
 
         System.out.println("");
         System.out.println("Enter the booking details below to see available rooms:");
@@ -69,7 +78,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
         System.out.println("3. Reserve a room");
         System.out.println("5. Go back to the main menu");
         System.out.println("________________________________________________");
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your option: ");
     }
     
     private void displayInValidDateFeedback() {
@@ -87,7 +96,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
             try {
                 scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
-                System.out.println("Your choice: " + choice);
+                // System.out.println("Your choice: " + choice);
                 switch (choice) {
                     case 1:
                         try {

@@ -48,7 +48,7 @@ public class Main {
         System.out.println("4. Admin");
         System.out.println("5. Exit");
         System.out.println("________________________________________________");
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your option: ");
     }
 
     public static void printFindAndReserveARoomMenu(Scanner scanner) {
@@ -56,7 +56,7 @@ public class Main {
         System.out.println("1. Find and reserve a room");
         System.out.println("2. Back");
 
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your option: ");
         int choice = scanner.nextInt();
 
         switch (choice) {
