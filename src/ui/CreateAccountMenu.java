@@ -3,8 +3,9 @@ package ui;
 import java.util.Scanner;
 
 import api.HotelResource;
+import model.IMenu;
 
-public class CreateAccountMenu {
+public class CreateAccountMenu implements IMenu {
 
     private String firstName = "";
     private String lastName  = "";
@@ -37,6 +38,8 @@ public class CreateAccountMenu {
 
     }
 
+
+    @Override
     public void run(Scanner scanner) {
         while (isRunning) {
             displayForm();
@@ -67,6 +70,7 @@ public class CreateAccountMenu {
                             System.out.println("-------------------------------------");
                             System.out.println("| Succesfully created your account! |");
                             System.out.println("-------------------------------------");
+                            System.out.println("");
                             firstName = "";
                             lastName = "";
                             email = "";
@@ -77,11 +81,13 @@ public class CreateAccountMenu {
                                 System.out.println("-----------------------------------------------");
                                 System.out.println("| Invalid email, please try a different email |");
                                 System.out.println("-----------------------------------------------");
+                                System.out.println("");
                             }
                         }
                         break;
                     case 5:
                         isRunning = false;
+                        System.out.println("");
                         break;
                     default:
                         System.out.println("-------------------------------------");
