@@ -27,7 +27,7 @@ public class Customer {
     @Override
     public String toString() {
         return String.format(
-                "Customer{firstName='%s', lastName='%s', email='%s'}",
+                "{\sfirstName=%s, lastName=%s, email=%s\s}",
                 firstName,
                 lastName,
                 email);

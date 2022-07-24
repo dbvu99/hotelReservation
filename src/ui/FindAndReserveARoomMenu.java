@@ -3,6 +3,7 @@ package ui;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -26,31 +27,32 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
     }
 
     public void displayAvailbleRooms() {
-        System.out.println("Available rooms:");
 
-        if (checkInDate == null || checkOutDate == null) {
-            System.out.println("- Please enter a check in and check out date to see available rooms.");
-            System.out.println("");
-            return;
+        try {
+            System.out.println("Available rooms:");
+
+            if (checkInDate == null || checkOutDate == null) {
+                System.out.println("- Please enter a check in and check out date to see available rooms.");
+                System.out.println("");
+                return;
+            }
+
+            if (checkInDate.after(checkOutDate)) {
+                System.out.println("- Check in date must be before check out date.");
+                System.out.println("");
+                return;
+            }
+
+            ArrayList<IRoom> availableRooms = (ArrayList<IRoom>) HotelResource.getInstance().findRooms(checkInDate, checkOutDate);
+
+            if (availableRooms.size() == 0) {
+                System.out.println("- No rooms are available for the specified dates.");
+                return;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-        if (checkInDate.after(checkOutDate)) {
-            System.out.println("- Check in date must be before check out date.");
-            System.out.println("");
-            return;
-        }
-
-        HotelResource.getInstance().findRooms(checkInDate, checkOutDate);
-
-        if (availableRooms.size() == 0) {
-            System.out.println("- No rooms are available for the specified dates.");
-            return;
-        }
-
-        // System.out.println("Available rooms:");
-        // for (IRoom room : availableRooms) {
-        //     System.out.println(room.getRoomNumber());
-        // }
 
     }
 

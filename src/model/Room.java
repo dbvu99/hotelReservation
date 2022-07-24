@@ -3,13 +3,13 @@ package model;
 public class Room implements  IRoom {
     private String roomNumber;
     private Double price;
-    private RoomType enumeration;
+    private RoomType roomType;
 
     public Room(String roomNumber, Double price, RoomType enumeration) {
         try {
             this.roomNumber = roomNumber;
             this.price = price;
-            this.enumeration = enumeration;
+            this.roomType = enumeration;
         }
         catch (Exception e) {
             throw e;
@@ -28,7 +28,7 @@ public class Room implements  IRoom {
 
     @Override
     public RoomType getRoomType() {
-        return enumeration;
+        return roomType;
     }
 
     @Override
@@ -39,10 +39,10 @@ public class Room implements  IRoom {
     @Override
     public String toString() {
         return String.format(
-                "Room{roomNumber='%s', price='%s', enumeration='%s'}",
+                "{ roomNumber=%s, price=%s, roomType=%s }",
                 roomNumber,
                 price,
-                enumeration);
+                roomType);
     }
     
 

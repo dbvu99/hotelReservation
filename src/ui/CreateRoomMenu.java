@@ -55,6 +55,28 @@ public class CreateRoomMenu extends Menu implements IMenu {
     }
 
     private void addMultipleRooms(Scanner scanner) {
+        boolean isSuccess = false;
+
+        while (!isSuccess) {
+            try {
+                System.out.println("");
+                System.out.println("Add a double room");
+                System.out.println("");
+                System.out.println("Room Type: " + RoomType.DOUBLE);
+                System.out.println("Room number:");
+                System.out.print("Enter room number: ");
+                scanner = new Scanner(System.in);
+                String roomNumber = scanner.nextInt() + "";
+                System.out.print("Room cost per night:");
+                scanner = new Scanner(System.in);
+                double roomCost = scanner.nextDouble();
+                AdminResource.getInstance().addOneRoom(roomNumber, roomCost, RoomType.DOUBLE);
+                isSuccess = true;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                displayErroredInputFeedback();
+            }
+        }
     }
 
     private void addSingleRoom(Scanner scanner) {
@@ -70,7 +92,7 @@ public class CreateRoomMenu extends Menu implements IMenu {
                 System.out.print("Enter room number: ");
                 scanner = new Scanner(System.in);
                 String roomNumber = scanner.nextInt() + "";
-                System.out.println("Room cost per night:");
+                System.out.print("Room cost per night:");
                 scanner = new Scanner(System.in);
                 double roomCost = scanner.nextDouble();
                 AdminResource.getInstance().addOneRoom(roomNumber, roomCost, RoomType.SINGLE);

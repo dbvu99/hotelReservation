@@ -10,21 +10,32 @@ import service.CustomerService;
 import service.ReservationService;
 
 public class HotelResource {
-    public Customer getCustomer(String customerEmail) {
-        return CustomerService.getInstance().getCustomer(customerEmail);
 
+    private Customer customer;
+
+    // public Customer getCustomer(String customerEmail) {
+    //     return CustomerService.getInstance().getCustomer(customerEmail);
+    // }
+
+    public Customer getCustomer(String customerEmail) {
+        return customer;
     }
 
+    // public void createACustomer(String firstName, String lastName, String email) {
+    //     try {
+    //         CustomerService.getInstance().addCustomer(firstName, lastName, email);
+    //     } catch (IllegalArgumentException e) {
+    //         throw new IllegalArgumentException(e.getMessage());
+    //     }
+    // }
+
+
     public void createACustomer(String firstName, String lastName, String email) {
-        try {
-            CustomerService.getInstance().addCustomer(firstName, lastName, email);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        customer = new Customer(firstName, lastName, email);
     }
 
     public IRoom getARoom(String roomId) {
-        return  ReservationService.getInstance().getARoom(roomId);
+        return ReservationService.getInstance().getARoom(roomId);
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
@@ -35,14 +46,16 @@ public class HotelResource {
         return ReservationService.getInstance().getReserviationsByCustomerEmail(customerEmail);
     }
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        return ReservationService.getInstance().findRooms(checkInDate, checkOutDate);
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) throws Exception {
+        try {
+            return ReservationService.getInstance().findRooms(checkInDate, checkOutDate);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public static HotelResource getInstance() {
         return new HotelResource();
     }
-
-
 
 }

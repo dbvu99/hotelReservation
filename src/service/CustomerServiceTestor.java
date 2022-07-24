@@ -3,14 +3,40 @@ package service;
 public class CustomerServiceTestor {
 
     public static void main(String[] args) {
-
-        CustomerService.getInstance().addCustomer("Duc", "Vu", "duc@domain.com");
-        CustomerService.getInstance().addCustomer("John", "Vu", "john@domain.com");
-        CustomerService.getInstance().addCustomer("David", "Vu", "david@domain.com");
-        CustomerService.getInstance().addCustomer("Tuan", "Vu", "tuan@domain.com");
+        
+        try {
+            CustomerService.getInstance().addCustomer("Duc", "Vu", "duc@domain.com");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            CustomerService.getInstance().addCustomer("John", "Vu", "john@domain.com");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            CustomerService.getInstance().addCustomer("David", "Vu", "david@domain.com");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            CustomerService.getInstance().addCustomer("Tuan", "Vu", "tuan@domain.com");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {   
+            System.out.println("test");
+            CustomerService.getInstance().addCustomer("Tuan", "Vu", "tuan@domain.com");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         // adding customer with bad email
-        CustomerService.getInstance().addCustomer("Duc", "Vu", "bad email");
+        try {
+            CustomerService.getInstance().addCustomer("Duc", "Vu", "bad email");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println(CustomerService.getInstance().getAllCustomers().toString());
 

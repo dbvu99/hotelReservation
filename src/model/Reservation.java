@@ -19,6 +19,19 @@ public class Reservation {
         return (checkOutDate.before(this.checkInDate) || checkInDate.after(this.checkOutDate));
     }
 
+
+    public boolean isOverlapped(Date checkInDate, Date checkOutDate) {
+        if (checkOutDate.before(this.checkOutDate) && checkOutDate.after(this.checkInDate)) {
+            return true;
+        }
+
+        if (checkInDate.after(this.checkInDate) && checkInDate.before(this.checkOutDate)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public IRoom getRoom() {
         return this.room;
     }
@@ -26,7 +39,7 @@ public class Reservation {
     @Override
     public String toString() {
         return String.format(
-                "Reservation{customer='%s', room='%s', checkInDate='%s', checkOutDate='%s'}",
+                "reservation={\n\scustomer=%s,\n\sroom=%s,\n\scheckInDate=%s,\n\scheckOutDate: %s\n}",
                 customer.toString(),
                 room.toString(),
                 checkInDate.toString(),
@@ -36,6 +49,15 @@ public class Reservation {
 
     public Customer getCustomer() {
         return null;
+    }
+
+    public Date getCheckInDate() {
+        return this.checkInDate;
+    }
+
+
+    public Date getCheckOutDate() {
+        return this.checkOutDate;
     }
 
 

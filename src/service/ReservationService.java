@@ -29,9 +29,7 @@ public class ReservationService {
 
         ArrayList<Reservation> allReservations = new ArrayList<Reservation>();
 
-        RESERVATIONS_BY_ROOM.forEach((key, value) -> {
-           allReservations.addAll(value);
-        });
+        RESERVATIONS_BY_ROOM.values().forEach(allReservations::addAll);
 
         return allReservations;
     }
@@ -91,27 +89,47 @@ public class ReservationService {
         return null;
     }
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) throws Exception {
 
         if (checkInDate.after(checkOutDate)) {
-            throw new IllegalArgumentException("Check-in date must happen before check-out date");
+            throw new Exception("Check-in date must happen before check-out date");
         }
 
+        try {
 
-        ArrayList<IRoom> availableRooms = new ArrayList<IRoom>(0);
+
+            ArrayList<IRoom> availableRooms = new ArrayList<IRoom>(0);
 
 
-        if (ROOMS.isEmpty()) {
+            if (ROOMS.isEmpty()) {
+                return availableRooms;
+            }
+
+            for (IRoom room : ROOMS) {
+                if (isRoomAvailable(room, checkInDate, checkOutDate)) {
+                    availableRooms.add(room);
+                }
+            }
+            
             return availableRooms;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
+
+        if (RESERVATIONS_BY_ROOM.get(room) == null) {
+            return true;
         }
 
-        for (int i = 0; i < RESERVATIONS.size(); i++) {
-            if (RESERVATIONS.get(i).isNotOverlapped(checkInDate, checkOutDate)) {
-                availableRooms.add(RESERVATIONS.get(i).getRoom());
+        for (Reservation reservation : RESERVATIONS_BY_ROOM.get(room)) {
+            if (reservation.isOverlapped(checkInDate, checkOutDate)) {
+                return false;
             }
         }
-        
-        return availableRooms;
+
+        return true;
     }
     
     public void printAllReservation() {

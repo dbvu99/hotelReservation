@@ -4,38 +4,40 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import model.Customer;
+import model.CustomerDatabase;
 
 public class CustomerService {
 
-    private static final ArrayList<Customer> CUSTOMERS = new ArrayList<Customer>();
+    private static CustomerDatabase customerDatabase = CustomerDatabase.getInstance();
+
 
     public static CustomerService getInstance() {
         return new CustomerService();
     }
 
-    public  void addCustomer(String firstName, String lastName, String email) {
+    public void addCustomer(String firstName, String lastName, String email) throws Exception {
         try {
-            Customer newCustomer = new Customer(firstName, lastName, email);
-            CUSTOMERS.add(newCustomer);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            Customer customer = new Customer(firstName, lastName, email);
+            customerDatabase.addCustomer(customer);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
-    public  Customer getCustomer(String customerEmail)  {
-        for (int i = 0; i < CUSTOMERS.size(); i++) {
-
-            if (CUSTOMERS.get(i).getEmail().equals(customerEmail)) {
-                return CUSTOMERS.get(i);
-            }
+    public Customer getCustomer(String customerEmail) {
+        try {
+            return customerDatabase.getCustomer(customerEmail);
+        } catch (NullPointerException e) {
+            throw e;
         }
-
-        throw new IllegalArgumentException("Customer with email " + customerEmail + " does not exist.");
     }
 
-    public  Collection<Customer> getAllCustomers() {
-        return CUSTOMERS;
+    public Collection<Customer> getAllCustomers() {
+        try {
+            return customerDatabase.values();
+        } catch (NullPointerException e) {
+            return new ArrayList<Customer>();
+        }
     }
-
 
 }
