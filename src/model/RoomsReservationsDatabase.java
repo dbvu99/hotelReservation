@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrderedList> {
@@ -13,20 +16,58 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
     public static RoomsReservationsDatabase getInstance() {
         return instance;
     }
+
     
-    public boolean addReservation(IRoom room, Reservation reservation) {
+    public void addReservationByRoom(IRoom room, Reservation reservation) {
         try {
             if (this.get(room) == null) {
                 ReservationOrderedList reservations = new ReservationOrderedList();
                 reservations.addReservation(reservation);
                 this.put(room, reservations);
-                return true;
             } else {
-                return this.get(room).addReservation(reservation);
+                this.get(room).addReservation(reservation);
             }
         } catch (NullPointerException e) {
             throw e;
         }
     }
+
+
+    public boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
+        try {
+            ReservationOrderedList reservations = this.get(room);
+
+            
+            if (reservations == null) {
+                return true;
+            }
+
+            // System.out.println("Size: " + reservations.size());
+            
+            return reservations.isNotOverlapped(checkInDate, checkOutDate);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+        System.out.println("Find rooms "  + checkInDate + " " + checkOutDate);
+        try {
+
+            Collection<IRoom> rooms = new ArrayList<IRoom>();
+
+            for (IRoom room : this.keySet()) {
+                if (this.isRoomAvailable(room, checkInDate, checkOutDate)) {
+                    rooms.add(room);
+                }
+            }
+
+            
+            return rooms;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReservationOrderedList extends ArrayList<Reservation> {
 
@@ -8,30 +9,48 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
         super();
     }
 
-    public boolean addReservation(Reservation reservation) {
+    public void addReservation(Reservation reservation) {
         try {
-            if (this.size() == 0) {
-                this.add(reservation);
-                return true;
-            }
-            
             int i = 0;
+            // System.out.println(i + " " + reservation.getCustomer().getFirstName());
 
-            while (reservation.getCheckInDate().after(this.get(i).getCheckOutDate()) && i < this.size() - 1) {
+            while (i <= this.size() - 1 && reservation.isAfter(this.get(i))) {
                 i++;
             }
 
-            System.out.println(i);
-
-
-            this.add(i,reservation);
-
+            this.add(i, reservation);
+            return;
 
         } catch (Exception e) {
             throw e;
         }
 
-        return false;
+    }
+
+    public boolean isNotOverlapped(Date checkInDate, Date checkOutDate) {
+        try {
+            int i = 0;
+            while (i <= this.size() - 1 && this.get(i).isBeforeDate(checkInDate)) {
+                i++;
+            }
+            System.out.println("last i " + i);
+
+            // if (i == 0) {
+            //     return this.get(i).isAfterDate(checkOutDate);
+            // }
+            
+            if (i >= 0 && i < this.size()) {
+                return this.get(i).isAfterDate(checkOutDate);
+            }
+
+            if (i == this.size()) {
+                return true;
+            }
+
+            return false;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 }

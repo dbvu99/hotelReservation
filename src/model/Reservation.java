@@ -19,6 +19,24 @@ public class Reservation {
         return (checkOutDate.before(this.checkInDate) || checkInDate.after(this.checkOutDate));
     }
 
+    public boolean isAfter(Reservation anotherReservation) {
+        return this.checkInDate.after(anotherReservation.checkOutDate);
+    }
+    
+
+    public boolean isBefore(Reservation anotherReservation) {
+        return this.checkOutDate.before(anotherReservation.checkInDate);
+    }
+
+    public boolean isAfterDate(Date date) {
+        return this.checkInDate.after(date);
+    }
+
+
+    public boolean isBeforeDate(Date date) {
+        return this.checkOutDate.before(date);
+    }
+
 
     public boolean isOverlapped(Date checkInDate, Date checkOutDate) {
         if (checkOutDate.before(this.checkOutDate) && checkOutDate.after(this.checkInDate)) {
@@ -48,7 +66,7 @@ public class Reservation {
     }
 
     public Customer getCustomer() {
-        return null;
+        return customer;
     }
 
     public Date getCheckInDate() {

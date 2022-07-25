@@ -23,6 +23,10 @@ public class Customer {
         }
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     // override to string
     @Override
     public String toString() {
