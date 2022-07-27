@@ -1,9 +1,11 @@
 package ui;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 import api.AdminResource;
 import api.HotelResource;
+import model.Customer;
 import model.IMenu;
 import model.IRoom;
 import model.Menu;
@@ -78,6 +80,12 @@ public class AdminMenu extends Menu implements IMenu {
     }
 
     private void displayAllCustomers() {
+        Collection<Customer> customers = AdminResource.getInstance().getAllCustomers();
+        if (customers.size() == 0) {
+            System.out.println("No customers found");
+        } else {
+            AdminResource.getInstance().getAllCustomers().forEach(customer -> System.out.println(customer));
+        }
     }
 
     private void displayAllReservations() {
