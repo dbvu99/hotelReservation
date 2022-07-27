@@ -48,13 +48,77 @@ public class ReservationServiceTestor {
                             sdf.parse("3/29/2023"),
                             sdf.parse("4/29/2023"));
 
-            System.out.println("reservations");
-            reservationService.getAllReserviations().forEach(reservation -> System.out.println(reservation));;
-            // reservationService.getAllReserviations().forEach(reservation -> System.out.println(reservation));;
 
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/28/2023"),
+                            sdf.parse("4/29/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/28/2023"),
+                            sdf.parse("3/08/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/28/2023"),
+                            sdf.parse("3/08/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/25/2023"),
+                            sdf.parse("3/06/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/22/2023"),
+                            sdf.parse("2/27/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("3/25/2023"),
+                            sdf.parse("3/28/2023"));
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("2/25/2023"),
+                            sdf.parse("2/28/2023"));
+
+
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("100"),
+                            sdf.parse("3/26/2023"),
+                            sdf.parse("3/27/2023"));
+
+            System.out.println("reservations");
+            reservationService.getAllReserviations().forEach(reservation -> System.out.println(reservation));
 
             System.out.println("available rooms");
             reservationService.findRooms(sdf.parse("3/29/2023"), sdf.parse("4/29/2023")).forEach(room -> {
+                System.out.println(room);
+            });
+
+            System.out.println("available rooms");
+            reservationService.findRooms(sdf.parse("3/21/2023"), sdf.parse("3/22/2023")).forEach(room -> {
+                System.out.println(room);
+            });
+
+
+            System.out.println("available rooms");
+            reservationService.findRooms(sdf.parse("3/26/2023"), sdf.parse("4/27/2023")).forEach(room -> {
                 System.out.println(room);
             });
 
