@@ -26,6 +26,9 @@ public class Customer {
     public String getFirstName() {
         return firstName;
     }
+    public String getLastName() {
+        return lastName;
+    }
 
     // override to string
     @Override

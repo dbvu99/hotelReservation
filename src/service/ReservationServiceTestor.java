@@ -37,7 +37,27 @@ public class ReservationServiceTestor {
 
             reservationService
                     .reserveARoom(customer,
-                            reservationService.getARoom("100"),
+                            reservationService.getARoom("101"),
+                            sdf.parse("3/29/2023"),
+                            sdf.parse("4/29/2023"));
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("102"),
+                            sdf.parse("3/29/2023"),
+                            sdf.parse("4/29/2023"));
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("103"),
+                            sdf.parse("3/29/2023"),
+                            sdf.parse("4/29/2023"));
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("104"),
+                            sdf.parse("3/29/2023"),
+                            sdf.parse("4/29/2023"));
+            reservationService
+                    .reserveARoom(customer,
+                            reservationService.getARoom("105"),
                             sdf.parse("3/29/2023"),
                             sdf.parse("4/29/2023"));
 
@@ -113,6 +133,12 @@ public class ReservationServiceTestor {
 
             System.out.println("available rooms");
             reservationService.findRooms(sdf.parse("3/21/2023"), sdf.parse("3/22/2023")).forEach(room -> {
+                System.out.println(room);
+            });
+
+
+            System.out.println("available rooms");
+            reservationService.findRooms(sdf.parse("3/26/2023"), sdf.parse("4/27/2023")).forEach(room -> {
                 System.out.println(room);
             });
 

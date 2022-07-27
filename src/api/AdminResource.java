@@ -20,7 +20,7 @@ public class AdminResource {
         return CustomerService.getInstance().getCustomer(customerEmail);
     }
 
-    public void addRooms(List<IRoom> rooms) {
+    public void addRooms(List<IRoom> rooms) throws Exception {
         for (IRoom room : rooms) {
             ReservationService.getInstance().addRoom(room);
         }
@@ -36,10 +36,10 @@ public class AdminResource {
     }
 
     public void displayAllReservations() {
-        System.out.println(ReservationService.getInstance().getReserviations().toString());
+        ReservationService.getInstance().getAllReserviations().forEach(System.out::println);
     }
 
-    public void addOneRoom(String roomNumber, double roomCost, RoomType enumuration) {
+    public void addOneRoom(String roomNumber, double roomCost, RoomType enumuration) throws Exception {
         try {
             ReservationService.getInstance().addRoom(new Room(roomNumber, roomCost, enumuration));
             System.out.println("Room added successfully");

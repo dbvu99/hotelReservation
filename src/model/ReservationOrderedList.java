@@ -57,7 +57,7 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
             while (i <= this.size() - 1 && this.get(i).isBeforeDate(checkInDate)) {
                 i++;
             }
-            System.out.println("last i " + i);
+            // System.out.println("last i " + i);
 
             // if (i == 0) {
             //     return this.get(i).isAfterDate(checkOutDate);

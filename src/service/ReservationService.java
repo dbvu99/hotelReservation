@@ -3,8 +3,6 @@ package service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import model.Customer;
 import model.IRoom;
@@ -60,8 +58,6 @@ public class ReservationService {
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         try {
-            // Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
-            // RoomsReservationsDatabase.getInstance().addReservationByRoom(room, reservation);
             return RoomsReservationsDatabase.getInstance().addReservation(customer, room, checkInDate, checkOutDate);
              
         } catch (Exception e) {
@@ -96,8 +92,7 @@ public class ReservationService {
     
    
 
-    public void displayAllReservations() {
-    }
+ 
  
 
 }

@@ -9,7 +9,7 @@ public class FreeRoom extends Room {
     @Override
     public String toString() {
         return String.format(
-                "FreeRoom{roomNumber='%s', price='%s', enumeration='%s'}",
+                "{ roomNumber=%s, price=%s, enumeration=%s }",
                 getRoomNumber(),
                 getRoomPrice(),
                 getRoomType()

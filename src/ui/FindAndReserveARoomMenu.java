@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import api.HotelResource;
+import model.Customer;
 import model.IMenu;
 import model.IRoom;
 import model.Menu;
@@ -47,6 +48,11 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
 
             if (availableRooms.size() == 0) {
                 System.out.println("- No rooms are available for the specified dates.");
+                return;
+            } else {
+                for (IRoom room : availableRooms) {
+                    System.out.println(room);
+                }
                 return;
             }
 
@@ -124,6 +130,34 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                             displayInValidDateFeedback();
                         }
                         break;
+                    case 3:
+                        try {
+                            System.out.print("Enter the room number: ");
+                            scanner = new Scanner(System.in);
+                            int roomNumber = scanner.nextInt();
+                            IRoom room = HotelResource.getInstance().getARoom(roomNumber + "");
+                            if (room == null) {
+                                System.out.println("Room number " + roomNumber + " does not exist.");
+                                return;
+                            }
+
+                            System.out.println("You have selected room " + roomNumber + ".");
+                            System.out.println("");
+                            System.out.println("Please enter the customer details below:");
+                            System.out.print("Customer email: ");
+                            scanner = new Scanner(System.in);
+                            String guestEmail = scanner.nextLine();
+                            Customer customer = HotelResource.getInstance().getCustomer(guestEmail);
+                            if (customer == null) {
+                                System.out.println("Customer with email " + guestEmail + " does not exist.");
+                                return;
+                            }
+                            ReservationService.getInstance().reserveARoom(customer, room, checkInDate, checkOutDate);
+                            System.out.println("Room " + roomNumber + " has been reserved for " + customer.getFirstName() + " " + customer.getLastName() + ".");
+
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
                     case 5:
                         isRunning = false;
                         System.out.println("Bye!");

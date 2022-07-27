@@ -57,7 +57,7 @@ public class Reservation {
     @Override
     public String toString() {
         return String.format(
-                "reservation={\n\scustomer=%s,\n\sroom=%s,\n\scheckInDate=%s,\n\scheckOutDate: %s\n}",
+                "reservation={\n\scustomer=%s,\n\sroom=%s,\n\scheckInDate=%s,\n\scheckOutDate=%s\n}",
                 customer.toString(),
                 room.toString(),
                 checkInDate.toString(),
