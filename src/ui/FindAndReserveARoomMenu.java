@@ -13,6 +13,8 @@ import model.Customer;
 import model.IMenu;
 import model.IRoom;
 import model.Menu;
+import model.Reservation;
+import model.Room;
 import service.ReservationService;
 
 public class FindAndReserveARoomMenu extends Menu implements IMenu {
@@ -97,6 +99,106 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
         System.out.println("");
     }
 
+    private void displayOption3(Scanner scanner) {
+        boolean isRunningOption3 = true;
+
+        while (isRunningOption3) {
+            try {
+                isRunningOption3 = false;
+                IRoom room = null;
+                boolean isRunningRoom = true;
+                while (isRunningRoom) {
+                    System.out.print("Enter the room number, or 999 to go back to the menu option: ");
+                    scanner = new Scanner(System.in);
+                    try {
+                        int roomNumber = scanner.nextInt();
+
+                        if (roomNumber == 999) {
+                            isRunningRoom = false;
+                            // this break terminate current interation of the loop
+                            break;
+                        }
+
+                        room = HotelResource.getInstance().getARoom(roomNumber + "");
+                        if (room == null) {
+                            System.out.println("- Room number " + roomNumber + " does not exist. Try again.");
+                            isRunningRoom = true;
+                        } else {
+                            isRunningRoom = false;
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println("");
+                        System.out.println("Invalid room number, please try again!");
+                        isRunningRoom = true;
+                    }
+                }
+
+                boolean isRunningCustomer = true;
+                Customer customer = null;
+                while (isRunningCustomer) {
+                    System.out.print("Enter the customer's email, or 999 to go back to the menu option: ");
+                    scanner = new Scanner(System.in);
+                    try {
+                        String customerEmail = scanner.nextLine();
+
+                        if (customerEmail.equals("999")) {
+                            isRunningCustomer = false;
+                            // this break terminate current interation of the loop
+                            break;
+                        }
+
+                        customer = HotelResource.getInstance().getCustomer(customerEmail);
+                        if (customer == null) {
+                            System.out.println(
+                                    "- Customer with email " +
+                                            customerEmail +
+                                            " does not exist. Try again.");
+
+                            isRunningCustomer = true;
+                        } else {
+                            isRunningCustomer = false;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("");
+                        System.out.println("Invalid customer email, please try again!");
+                        isRunningCustomer = true;
+                    }
+                }
+                
+                System.out.println("");
+                System.out.println("Reserving room " + room.getRoomNumber() + " for " + customer.getFirstName() + " "
+                        + customer.getLastName() + "...");
+
+                        try {
+                Reservation newReservation = ReservationService
+                        .getInstance()
+                        .reserveARoom(customer, room, checkInDate, checkOutDate);
+
+                        if (newReservation == null) {
+                    System.out.println("- Room " + room.getRoomNumber() + " is not available for the specified dates.");
+                } else {
+                    System.out.println("- Room " +
+                            room.getRoomNumber() +
+                            " is reserved for " +
+                            customer.getFirstName() + " " +
+                    customer.getLastName() + " for the dates " + DATE_FORMATTER.format(checkInDate) + " to "
+                            + DATE_FORMATTER.format(checkOutDate));
+                    isRunningOption3 = false;
+                }
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                
+                
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     @Override
     public void run(Scanner scanner) {
 
@@ -155,48 +257,8 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                         }
                         break;
                     case 3:
-                        try {
-                            System.out.print("Enter the room number: ");
-                            scanner = new Scanner(System.in);
-                            int roomNumber = scanner.nextInt();
-                            IRoom room = HotelResource.getInstance().getARoom(roomNumber + "");
-                            boolean isRunningRoom = true;
-                            while (isRunningRoom && room == null) {
-                                System.out.println("Room number " + roomNumber + " does not exist.");
-                                System.out.print("Enter the another room number, or 99 to go back to the menu: ");
-                                scanner = new Scanner(System.in);
-                                roomNumber = scanner.nextInt();
-                                if (roomNumber == 99) {
-                                    break;
-                                }
-                                room = HotelResource.getInstance().getARoom(roomNumber + "");
-                            }
-
-                            System.out.println("You have selected room " + roomNumber + ".");
-                            System.out.println("");
-                            System.out.println("Please enter the customer details below:");
-                            System.out.print("Customer email: ");
-                            scanner = new Scanner(System.in);
-                            String guestEmail = scanner.nextLine();
-                            Customer customer = HotelResource.getInstance().getCustomer(guestEmail);
-                            boolean isRunningEmail = true;
-                            while (isRunningEmail && customer == null) {
-                                System.out.println("Customer with email " + guestEmail + " does not exist.");
-                                System.out.print("Please enter the customer email, or enter 99 to return to menu: ");
-                                scanner = new Scanner(System.in);
-                                guestEmail = scanner.nextLine();
-                                if (guestEmail.equals("99")) {
-                                    isRunningEmail = false;
-                                }
-                                customer = HotelResource.getInstance().getCustomer(guestEmail);
-                            }
-                            System.out.println("Adding room...");
-                            ReservationService.getInstance().reserveARoom(customer, room, checkInDate, checkOutDate);
-                            System.out.println("Room " + roomNumber + " has been reserved for " + customer.getFirstName() + " " + customer.getLastName() + ".");
-
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
+                        displayOption3(scanner);
+                        break;
                     case 5:
                         isRunning = false;
                         System.out.println("Bye!");
