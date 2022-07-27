@@ -108,27 +108,50 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                 // System.out.println("Your choice: " + choice);
                 switch (choice) {
                     case 1:
-                        try {
-                            System.out.print("Enter a check-in date (M/d/yyyy): ");
-                            scanner = new Scanner(System.in);
-                            String ciDate = scanner.nextLine();
-                            checkInDate = DATE_FORMATTER.parse(ciDate);
-                            System.out.println("You have selected " + checkInDate + " as your check-in date.");
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            displayInValidDateFeedback();
-                        }
+                        boolean isRunningCheckInDate = true;
+
+                        while (isRunningCheckInDate) {
+                            try {
+                                System.out.print("Enter a check-in date (M/d/yyyy): ");
+                                scanner = new Scanner(System.in);
+                                String ciDate = scanner.nextLine();
+                                checkInDate = DATE_FORMATTER.parse(ciDate);
+                                if (checkInDate != null) {
+                                    System.out.println(
+                                        "You have selected " +
+                                        checkInDate +
+                                        " as your check-in date.");
+                                    isRunningCheckInDate = false;
+                                } else {
+                                    displayInValidDateFeedback();
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                                displayInValidDateFeedback();
+                            }
+                        }   
                         break;
                     case 2:
-                        try {
-                            System.out.print("Enter a check-out date (M/d/yyyy): ");
-                            scanner = new Scanner(System.in);
-                            String coDate = scanner.nextLine();
-                            checkOutDate = DATE_FORMATTER.parse(coDate);
-                            System.out.println("You have selected " + checkOutDate + " as your check-out date.");
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            displayInValidDateFeedback();
+                        boolean isRunningCheckOutDate = true;
+                        while (isRunningCheckOutDate) {
+                            try {
+                                System.out.print("Enter a check-out date (M/d/yyyy): ");
+                                scanner = new Scanner(System.in);
+                                String coDate = scanner.nextLine();
+                                checkInDate = DATE_FORMATTER.parse(coDate);
+                                if (checkOutDate != null) {
+                                    System.out.println(
+                                        "You have selected " +
+                                        checkOutDate +
+                                        " as your check-out date.");
+                                    isRunningCheckOutDate = false;
+                                } else {
+                                    displayInValidDateFeedback();
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                                displayInValidDateFeedback();
+                            }
                         }
                         break;
                     case 3:
