@@ -16,7 +16,6 @@ public class ReservationService {
         return new ReservationService();
     }
 
-
     public Collection<Reservation> getAllReserviations() {
 
         try {
@@ -30,7 +29,7 @@ public class ReservationService {
                     });
 
             return reservations;
-      
+
         } catch (Exception e) {
             throw e;
         }
@@ -49,23 +48,20 @@ public class ReservationService {
         }
     }
 
-  
     public ArrayList<Reservation> getReserviationsByCustomerEmail(String customerEmail) {
         return null;
     }
 
-   
-
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         try {
             return RoomsReservationsDatabase.getInstance().addReservation(customer, room, checkInDate, checkOutDate);
-             
+
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public  IRoom getARoom(String roomId)  {
+    public IRoom getARoom(String roomId) {
         try {
             return RoomDatabase.getInstance().get(roomId);
         } catch (Exception e) {
@@ -89,10 +85,5 @@ public class ReservationService {
             throw e;
         }
     }
-    
-   
-
- 
- 
 
 }
