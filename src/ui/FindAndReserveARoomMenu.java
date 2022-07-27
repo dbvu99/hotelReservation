@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
+import api.AdminResource;
 import api.HotelResource;
 import model.Customer;
 import model.IMenu;
@@ -64,7 +65,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
 
     private void displayMenu() {
 
-        if (ReservationService.getInstance().getAllRooms().size() == 0) {
+        if (AdminResource.getInstance().getAllRooms().size() == 0) {
             System.out.println("");
             System.out.println("There is no room in the hotel. Please go to the Admin menu to add a room first.");
         }
