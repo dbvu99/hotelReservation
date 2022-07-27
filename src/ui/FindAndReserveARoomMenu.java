@@ -47,7 +47,8 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                 return;
             }
 
-            ArrayList<IRoom> availableRooms = (ArrayList<IRoom>) HotelResource.getInstance().findRooms(checkInDate, checkOutDate);
+            ArrayList<IRoom> availableRooms = (ArrayList<IRoom>) HotelResource.getInstance().findRooms(checkInDate,
+                    checkOutDate);
 
             if (availableRooms.size() == 0) {
                 System.out.println("- No rooms are available for the specified dates.");
@@ -91,7 +92,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
         System.out.println("________________________________________________");
         System.out.print("Enter your option: ");
     }
-    
+
     private void displayInValidDateFeedback() {
         System.out.println("-------------------------------------");
         System.out.println("| Invalid date, please try again! |");
@@ -165,33 +166,32 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                         isRunningCustomer = true;
                     }
                 }
-                
+
                 System.out.println("");
                 System.out.println("Reserving room " + room.getRoomNumber() + " for " + customer.getFirstName() + " "
                         + customer.getLastName() + "...");
 
-                        try {
-                Reservation newReservation = ReservationService
-                        .getInstance()
-                        .reserveARoom(customer, room, checkInDate, checkOutDate);
+                try {
+                    Reservation newReservation = ReservationService
+                            .getInstance()
+                            .reserveARoom(customer, room, checkInDate, checkOutDate);
 
-                        if (newReservation == null) {
-                    System.out.println("- Room " + room.getRoomNumber() + " is not available for the specified dates.");
-                } else {
-                    System.out.println("- Room " +
-                            room.getRoomNumber() +
-                            " is reserved for " +
-                            customer.getFirstName() + " " +
-                    customer.getLastName() + " for the dates " + DATE_FORMATTER.format(checkInDate) + " to "
-                            + DATE_FORMATTER.format(checkOutDate));
-                    isRunningOption3 = false;
+                    if (newReservation == null) {
+                        System.out.println(
+                                "- Room " + room.getRoomNumber() + " is not available for the specified dates.");
+                    } else {
+                        System.out.println("- Room " +
+                                room.getRoomNumber() +
+                                " is reserved for " +
+                                customer.getFirstName() + " " +
+                                customer.getLastName() + " for the dates " + DATE_FORMATTER.format(checkInDate) + " to "
+                                + DATE_FORMATTER.format(checkOutDate));
+                        isRunningOption3 = false;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    break;
                 }
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            break;
-                        }
-                
-                
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -220,9 +220,9 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                                 checkInDate = DATE_FORMATTER.parse(ciDate);
                                 if (checkInDate != null) {
                                     System.out.println(
-                                        "You have selected " +
-                                        checkInDate +
-                                        " as your check-in date.");
+                                            "You have selected " +
+                                                    checkInDate +
+                                                    " as your check-in date.");
                                     isRunningCheckInDate = false;
                                 } else {
                                     displayInValidDateFeedback();
@@ -231,7 +231,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                                 System.out.println(e.getMessage());
                                 displayInValidDateFeedback();
                             }
-                        }   
+                        }
                         break;
                     case 2:
                         boolean isRunningCheckOutDate = true;
@@ -243,9 +243,9 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                                 checkInDate = DATE_FORMATTER.parse(coDate);
                                 if (checkOutDate != null) {
                                     System.out.println(
-                                        "You have selected " +
-                                        checkOutDate +
-                                        " as your check-out date.");
+                                            "You have selected " +
+                                                    checkOutDate +
+                                                    " as your check-out date.");
                                     isRunningCheckOutDate = false;
                                 } else {
                                     displayInValidDateFeedback();
@@ -271,6 +271,6 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                 displayErroredInputFeedback();
             }
         }
-        
+
     }
 }
