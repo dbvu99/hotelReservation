@@ -9,17 +9,41 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
         super();
     }
 
-    public void addReservation(Reservation reservation) {
+    public Reservation addReservation(Reservation reservation) {
         try {
             int i = 0;
-            // System.out.println(i + " " + reservation.getCustomer().getFirstName());
 
             while (i <= this.size() - 1 && reservation.isAfter(this.get(i))) {
                 i++;
             }
 
             this.add(i, reservation);
-            return;
+            return reservation;
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
+    public Reservation addNewReservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        try {
+            int i = 0;
+
+            while (i <= this.size() - 1 && this.get(i).isBeforeDate(checkInDate)) {
+                i++;
+            }
+            
+            if (this.get(i).isAfterDate(checkInDate)) {
+                Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
+                this.add(i, reservation);
+                return reservation;
+            }
+
+            // this.add(i, reservation);
+            // return reservation;
+
+            return null;
 
         } catch (Exception e) {
             throw e;

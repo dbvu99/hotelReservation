@@ -17,7 +17,6 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
         return instance;
     }
 
-    
     public void addReservationByRoom(IRoom room, Reservation reservation) {
         try {
             if (this.get(room) == null) {
@@ -26,6 +25,23 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
                 this.put(room, reservations);
             } else {
                 this.get(room).addReservation(reservation);
+            }
+        } catch (NullPointerException e) {
+            throw e;
+        }
+    }
+
+
+    public Reservation addReservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        try {
+            if (this.get(room) == null) {
+                ReservationOrderedList reservations = new ReservationOrderedList();
+                Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
+                reservations.add(reservation);
+                this.put(room, reservations);
+                return reservation;
+            } else {
+                return this.get(room).addNewReservation(customer, room, checkInDate, checkOutDate);
             }
         } catch (NullPointerException e) {
             throw e;
@@ -51,12 +67,12 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        System.out.println("Find rooms "  + checkInDate + " " + checkOutDate);
+        // System.out.println("Find rooms "  + checkInDate + " " + checkOutDate);
         try {
 
             Collection<IRoom> rooms = new ArrayList<IRoom>();
 
-            for (IRoom room : this.keySet()) {
+            for (IRoom room : RoomDatabase.getInstance().values()) {
                 if (this.isRoomAvailable(room, checkInDate, checkOutDate)) {
                     rooms.add(room);
                 }

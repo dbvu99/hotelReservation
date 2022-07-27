@@ -9,84 +9,72 @@ import java.util.Map;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
+import model.RoomDatabase;
+import model.RoomsReservationsDatabase;
 
 public class ReservationService {
-
-    private static final ArrayList<IRoom> ROOMS = new ArrayList<IRoom>();
-    private static final ArrayList<Reservation> RESERVATIONS = new ArrayList<Reservation>();
-    private static final HashMap<IRoom, ArrayList<Reservation>> RESERVATIONS_BY_ROOM = new HashMap<IRoom, ArrayList<Reservation>>();
-
 
     public static ReservationService getInstance() {
         return new ReservationService();
     }
 
-    public  HashMap<IRoom, ArrayList<Reservation>> getReservationsByAllRooms() {
-        return RESERVATIONS_BY_ROOM;
-    }
 
-    public ArrayList<Reservation> getAllReserviations() {
+    public Collection<Reservation> getAllReserviations() {
 
-        ArrayList<Reservation> allReservations = new ArrayList<Reservation>();
+        try {
+            Collection<Reservation> reservations = new ArrayList<Reservation>();
 
-        RESERVATIONS_BY_ROOM.values().forEach(allReservations::addAll);
+            RoomsReservationsDatabase
+                    .getInstance()
+                    .values()
+                    .forEach(reservation -> {
+                        reservations.addAll(reservation);
+                    });
 
-        return allReservations;
+            return reservations;
+      
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
     public Collection<IRoom> getAllRooms() {
-        return ROOMS;
+        return RoomDatabase.getInstance().values();
     }
 
-    public void addRoom(IRoom room) {
+    public void addRoom(IRoom room) throws Exception {
         try {
-            ROOMS.add(room);
+            RoomDatabase.getInstance().addRoom(room);
         } catch (IllegalArgumentException e) {
             throw e;
         }
     }
 
-    public ArrayList<Reservation> getReserviations() {
-        return RESERVATIONS;
-    }
-
+  
     public ArrayList<Reservation> getReserviationsByCustomerEmail(String customerEmail) {
-
-        ArrayList<Reservation> reservationsByCustomerEmail = new ArrayList<Reservation>();
-
-        for (int i = 0; i < RESERVATIONS.size(); i++) {
-            if (RESERVATIONS.get(i).getCustomer().getEmail().equals(customerEmail)) {
-                reservationsByCustomerEmail.add(RESERVATIONS.get(i));
-            }
-        }
-
-        return reservationsByCustomerEmail;
+        return null;
     }
 
    
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
-        Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
-        RESERVATIONS.add(reservation);
-
-        if (RESERVATIONS_BY_ROOM.containsKey(room)) {
-            RESERVATIONS_BY_ROOM.get(room).add(reservation);
-        } else {
-            ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-            reservations.add(reservation);
-            RESERVATIONS_BY_ROOM.put(room, reservations);
+        try {
+            // Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
+            // RoomsReservationsDatabase.getInstance().addReservationByRoom(room, reservation);
+            return RoomsReservationsDatabase.getInstance().addReservation(customer, room, checkInDate, checkOutDate);
+             
+        } catch (Exception e) {
+            throw e;
         }
-
-        return reservation;
     }
 
     public  IRoom getARoom(String roomId)  {
-        for (int i = 0; i < ROOMS.size(); i++) {
-            if (ROOMS.get(i).getRoomNumber().equals(roomId)) {
-                return ROOMS.get(i);
-            }
+        try {
+            return RoomDatabase.getInstance().get(roomId);
+        } catch (Exception e) {
+            throw e;
         }
-        return null;
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) throws Exception {
@@ -95,46 +83,18 @@ public class ReservationService {
             throw new Exception("Check-in date must happen before check-out date");
         }
 
+        if (checkInDate.before(new Date())) {
+            throw new Exception("Check-in date must happen after today");
+        }
+
         try {
-
-
-            ArrayList<IRoom> availableRooms = new ArrayList<IRoom>(0);
-
-
-            if (ROOMS.isEmpty()) {
-                return availableRooms;
-            }
-
-            for (IRoom room : ROOMS) {
-                if (isRoomAvailable(room, checkInDate, checkOutDate)) {
-                    availableRooms.add(room);
-                }
-            }
-            
-            return availableRooms;
+            return RoomsReservationsDatabase.getInstance().findRooms(checkInDate, checkOutDate);
         } catch (Exception e) {
             throw e;
         }
     }
-
-    public boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
-
-        if (RESERVATIONS_BY_ROOM.get(room) == null) {
-            return true;
-        }
-
-        for (Reservation reservation : RESERVATIONS_BY_ROOM.get(room)) {
-            if (reservation.isOverlapped(checkInDate, checkOutDate)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
     
-    public void printAllReservation() {
-        System.out.println(RESERVATIONS);
-    }
+   
 
     public void displayAllReservations() {
     }
