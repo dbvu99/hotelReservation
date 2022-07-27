@@ -136,9 +136,16 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                             scanner = new Scanner(System.in);
                             int roomNumber = scanner.nextInt();
                             IRoom room = HotelResource.getInstance().getARoom(roomNumber + "");
-                            if (room == null) {
+                            boolean isRunningRoom = true;
+                            while (isRunningRoom && room == null) {
                                 System.out.println("Room number " + roomNumber + " does not exist.");
-                                return;
+                                System.out.print("Enter the another room number, or 99 to go back to the menu: ");
+                                scanner = new Scanner(System.in);
+                                roomNumber = scanner.nextInt();
+                                if (roomNumber == 99) {
+                                    break;
+                                }
+                                room = HotelResource.getInstance().getARoom(roomNumber + "");
                             }
 
                             System.out.println("You have selected room " + roomNumber + ".");
@@ -148,10 +155,18 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                             scanner = new Scanner(System.in);
                             String guestEmail = scanner.nextLine();
                             Customer customer = HotelResource.getInstance().getCustomer(guestEmail);
-                            if (customer == null) {
+                            boolean isRunningEmail = true;
+                            while (isRunningEmail && customer == null) {
                                 System.out.println("Customer with email " + guestEmail + " does not exist.");
-                                return;
+                                System.out.print("Please enter the customer email, or enter 99 to return to menu: ");
+                                scanner = new Scanner(System.in);
+                                guestEmail = scanner.nextLine();
+                                if (guestEmail.equals("99")) {
+                                    isRunningEmail = false;
+                                }
+                                customer = HotelResource.getInstance().getCustomer(guestEmail);
                             }
+                            System.out.println("Adding room...");
                             ReservationService.getInstance().reserveARoom(customer, room, checkInDate, checkOutDate);
                             System.out.println("Room " + roomNumber + " has been reserved for " + customer.getFirstName() + " " + customer.getLastName() + ".");
 
