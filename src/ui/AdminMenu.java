@@ -81,7 +81,7 @@ public class AdminMenu extends Menu implements IMenu {
     }
 
     private void displayAllReservations() {
-
+        AdminResource.getInstance().displayAllReservations();
     }
     
 }

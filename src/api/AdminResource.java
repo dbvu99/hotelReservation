@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 import model.Room;
 import model.RoomType;
 import service.CustomerService;
@@ -36,7 +37,16 @@ public class AdminResource {
     }
 
     public void displayAllReservations() {
-        ReservationService.getInstance().getAllReserviations().forEach(System.out::println);
+        Collection<Reservation> reservations = ReservationService.getInstance().getAllReserviations();
+        if (reservations.isEmpty()) {
+            System.out.println("--------------------------");
+            System.out.println("| No reservations found! |");
+            System.out.println("--------------------------");
+        } else {
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation);
+            }
+        }
     }
 
     public void addOneRoom(String roomNumber, double roomCost, RoomType enumuration) throws Exception {
