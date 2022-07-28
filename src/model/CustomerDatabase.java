@@ -7,12 +7,17 @@ public class CustomerDatabase extends HashMap<String, Customer> {
     private static final long serialVersionUID = 1L;
     private static CustomerDatabase instance = null;
 
-    private CustomerDatabase() {
+    public CustomerDatabase() {
         super();
     }
 
-    public static CustomerDatabase getInstance() {
-        return instance != null ? instance : new CustomerDatabase();
+    // public static CustomerDatabase getInstance() {
+    // return instance != null ? instance : new CustomerDatabase();
+    // }
+
+    @Override
+    public Customer get(Object key) {
+        return super.get(key);
     }
 
     public Customer getCustomer(String email) {
@@ -25,11 +30,11 @@ public class CustomerDatabase extends HashMap<String, Customer> {
 
     public void addCustomer(Customer customer) throws Exception {
         try {
-            if (CustomerDatabase.getInstance().get(customer.getEmail()) != null) {
+            if (this.get(customer.getEmail()) != null) {
                 throw new Exception("Email must be unqiue.");
             }
 
-            CustomerDatabase.getInstance().put(customer.getEmail(), customer);
+            this.put(customer.getEmail(), customer);
 
         } catch (Exception e) {
             throw e;

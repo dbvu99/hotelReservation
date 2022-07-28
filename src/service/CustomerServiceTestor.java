@@ -3,7 +3,7 @@ package service;
 public class CustomerServiceTestor {
 
     public static void main(String[] args) {
-        
+
         try {
             CustomerService.getInstance().addCustomer("Duc", "Vu", "duc@domain.com");
         } catch (Exception e) {
@@ -24,7 +24,7 @@ public class CustomerServiceTestor {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        try {   
+        try {
             System.out.println("test");
             CustomerService.getInstance().addCustomer("Tuan", "Vu", "tuan@domain.com");
         } catch (Exception e) {
@@ -41,9 +41,8 @@ public class CustomerServiceTestor {
         System.out.println(CustomerService.getInstance().getAllCustomers().toString());
 
         // get customer by email
-        System.out.println(CustomerService.getInstance().getCustomer("tuan@domain.com").toString());
-        System.out.println(CustomerService.getInstance().getCustomer("nonExist@mail.com").toString());
+        // System.out.println(CustomerService.getInstance().getCustomer("tuan@domain.com").toString());
+        // System.out.println(CustomerService.getInstance().getCustomer("nonExist@mail.com").toString());
     }
-
 
 }

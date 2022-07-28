@@ -8,11 +8,16 @@ import model.CustomerDatabase;
 
 public class CustomerService {
 
-    private static CustomerDatabase customerDatabase = CustomerDatabase.getInstance();
+    private static CustomerDatabase customerDatabase = new CustomerDatabase();
 
+    private static CustomerService instance = null;
+
+    private CustomerService() {
+        super();
+    }
 
     public static CustomerService getInstance() {
-        return new CustomerService();
+        return instance == null ? new CustomerService() : instance;
     }
 
     public void addCustomer(String firstName, String lastName, String email) throws Exception {
@@ -26,7 +31,7 @@ public class CustomerService {
 
     public Customer getCustomer(String customerEmail) {
         try {
-            return customerDatabase.getCustomer(customerEmail);
+            return customerDatabase.get(customerEmail);
         } catch (NullPointerException e) {
             throw e;
         }
