@@ -186,11 +186,11 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                                 customer.getFirstName() + " " +
                                 customer.getLastName() + " for the dates " + DATE_FORMATTER.format(checkInDate) + " to "
                                 + DATE_FORMATTER.format(checkOutDate));
+
                         isRunningOption3 = false;
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    break;
                 }
 
             } catch (Exception e) {
@@ -212,18 +212,29 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                     case 1:
                         boolean isRunningCheckInDate = true;
 
-                        while (isRunningCheckInDate) {
+                        while (isRunningCheckInDate || checkInDate == null) {
                             try {
                                 System.out.print("Enter a check-in date (M/d/yyyy): ");
                                 scanner = new Scanner(System.in);
                                 String ciDate = scanner.nextLine();
                                 checkInDate = DATE_FORMATTER.parse(ciDate);
+
                                 if (checkInDate != null) {
-                                    System.out.println(
-                                            "You have selected " +
-                                                    checkInDate +
-                                                    " as your check-in date.");
-                                    isRunningCheckInDate = false;
+                                    // System.out.println(checkInDate.before(new Date()));
+                                    if (checkInDate.before(new Date())) {
+                                        System.out.println(
+                                                "- Check-in date cannot be in the past. Try a different date.");
+                                        checkInDate = null;
+                                        isRunningCheckInDate = true;
+
+                                    } else {
+                                        System.out.println(
+                                                "You have selected " +
+                                                        checkInDate +
+                                                        " as your check-in date.");
+                                        isRunningCheckInDate = false;
+                                    }
+
                                 } else {
                                     displayInValidDateFeedback();
                                 }
@@ -235,18 +246,27 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                         break;
                     case 2:
                         boolean isRunningCheckOutDate = true;
-                        while (isRunningCheckOutDate) {
+                        while (isRunningCheckOutDate || checkOutDate == null) {
                             try {
                                 System.out.print("Enter a check-out date (M/d/yyyy): ");
                                 scanner = new Scanner(System.in);
                                 String coDate = scanner.nextLine();
-                                checkInDate = DATE_FORMATTER.parse(coDate);
+                                checkOutDate = DATE_FORMATTER.parse(coDate);
                                 if (checkOutDate != null) {
-                                    System.out.println(
-                                            "You have selected " +
-                                                    checkOutDate +
-                                                    " as your check-out date.");
-                                    isRunningCheckOutDate = false;
+
+                                    if (checkOutDate.before(new Date())) {
+                                        System.out.println(
+                                                "- Check-out date cannot be in the past. Try a different date.");
+                                        checkOutDate = null;
+                                        isRunningCheckOutDate = true;
+                                    } else {
+                                        System.out.println(
+                                                "You have selected " +
+                                                        checkOutDate +
+                                                        " as your check-out date.");
+                                        isRunningCheckOutDate = false;
+                                    }
+
                                 } else {
                                     displayInValidDateFeedback();
                                 }

@@ -49,7 +49,16 @@ public class ReservationService {
     }
 
     public ArrayList<Reservation> getReserviationsByCustomerEmail(String customerEmail) {
-        return null;
+
+        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+
+        getAllReserviations().forEach(reservation -> {
+            if (reservation.getCustomer().getEmail().equals(customerEmail)) {
+                reservations.add(reservation);
+            }
+        });
+
+        return reservations;
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {

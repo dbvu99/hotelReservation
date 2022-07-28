@@ -1,7 +1,11 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
+import api.HotelResource;
+import model.Reservation;
 
 public class MainMenu {
 
@@ -9,7 +13,7 @@ public class MainMenu {
 
     public void displayHome() {
 
-        while(isRunning) {
+        while (isRunning) {
 
             try {
                 System.out.println("1. Find and reserve a room");
@@ -53,22 +57,41 @@ public class MainMenu {
                 System.out.println("INVALID INPUT!!!! Try again!\n");
             }
 
-
         }
 
     }
 
-    private void printAdminMenu(Scanner scanner) {
-    }
-
-    private void printCreateAccountMenu(Scanner scanner) {
-        
-    }
-
     private void printMyReservationsMenu(Scanner scanner) {
+        boolean isRunningOption2 = true;
+
+        while (isRunningOption2) {
+            System.out.println("");
+            System.out.println("Please enter your email address: ");
+            scanner.nextLine();
+            try {
+                String email = scanner.nextLine();
+                if (email.isEmpty()) {
+                    System.out.println("Email cannot be empty!");
+                } else {
+                    System.out.println("");
+                    System.out.println("Your reservations: ");
+                    System.out.println("");
+
+                    Collection<Reservation> reservations = HotelResource.getInstance().getCustomersReservations(email);
+                    if (reservations.isEmpty()) {
+                        System.out.println("You have no reservations!");
+                    } else {
+                        HotelResource.getInstance().getCustomersReservations(email).forEach(System.out::println);
+                        System.out.println("");
+                    }
+                    isRunningOption2 = false;
+
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
     }
 
-    private void printFindAndReserveARoomMenu(Scanner scanner) {
-    }
-    
 }

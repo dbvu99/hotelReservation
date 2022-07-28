@@ -22,7 +22,7 @@ public class CreateRoomMenu extends Menu implements IMenu {
             System.out.println("1. Add a single-bed room");
             System.out.println("2. Add a double-bed room");
             System.out.println("3. Add a free room");
-            System.out.println("4. Add test rooms");
+            // System.out.println("4. Add test rooms");
             System.out.println("5. Back");
             System.out.println("________________________________________________");
             System.out.print("Enter your option: ");
@@ -103,5 +103,5 @@ public class CreateRoomMenu extends Menu implements IMenu {
             }
         }
     }
-    
+
 }
