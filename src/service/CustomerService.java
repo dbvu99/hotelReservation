@@ -8,7 +8,7 @@ import model.CustomerDatabase;
 
 public class CustomerService {
 
-    private static CustomerDatabase customerDatabase = new CustomerDatabase();
+    private static CustomerDatabase customerDatabase = CustomerDatabase.getInstance();
 
     private static CustomerService instance = null;
 

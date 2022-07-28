@@ -7,14 +7,14 @@ import java.util.HashMap;
 
 public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrderedList> {
     private static final long serialVersionUID = 1L;
-    private static RoomsReservationsDatabase instance = new RoomsReservationsDatabase();
-    
+    private static RoomsReservationsDatabase instance = null;
+
     private RoomsReservationsDatabase() {
         super();
     }
-    
+
     public static RoomsReservationsDatabase getInstance() {
-        return instance;
+        return instance != null ? instance : new RoomsReservationsDatabase();
     }
 
     public void addReservationByRoom(IRoom room, Reservation reservation) {
@@ -30,7 +30,6 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
             throw e;
         }
     }
-
 
     public Reservation addReservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         try {
@@ -48,18 +47,16 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
         }
     }
 
-
     public boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
         try {
             ReservationOrderedList reservations = this.get(room);
 
-            
             if (reservations == null) {
                 return true;
             }
 
             // System.out.println("Size: " + reservations.size());
-            
+
             return reservations.isNotOverlapped(checkInDate, checkOutDate);
         } catch (Exception e) {
             throw e;
@@ -67,7 +64,7 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        // System.out.println("Find rooms "  + checkInDate + " " + checkOutDate);
+        // System.out.println("Find rooms " + checkInDate + " " + checkOutDate);
         try {
 
             Collection<IRoom> rooms = new ArrayList<IRoom>();
@@ -78,12 +75,10 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
                 }
             }
 
-            
             return rooms;
         } catch (Exception e) {
             throw e;
         }
     }
-
 
 }

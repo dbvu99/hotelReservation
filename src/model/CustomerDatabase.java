@@ -7,13 +7,13 @@ public class CustomerDatabase extends HashMap<String, Customer> {
     private static final long serialVersionUID = 1L;
     private static CustomerDatabase instance = null;
 
-    public CustomerDatabase() {
+    private CustomerDatabase() {
         super();
     }
 
-    // public static CustomerDatabase getInstance() {
-    // return instance != null ? instance : new CustomerDatabase();
-    // }
+    public static CustomerDatabase getInstance() {
+        return instance != null ? instance : new CustomerDatabase();
+    }
 
     @Override
     public Customer get(Object key) {

@@ -12,8 +12,16 @@ import model.RoomsReservationsDatabase;
 
 public class ReservationService {
 
+    private static ReservationService instance = null;
+    private static RoomDatabase roomDatabase = RoomDatabase.getInstance();
+    private static RoomsReservationsDatabase roomsReservationsDatabase = RoomsReservationsDatabase.getInstance();
+
+    private ReservationService() {
+        super();
+    }
+
     public static ReservationService getInstance() {
-        return new ReservationService();
+        return instance == null ? new ReservationService() : instance;
     }
 
     public Collection<Reservation> getAllReserviations() {
@@ -21,8 +29,7 @@ public class ReservationService {
         try {
             Collection<Reservation> reservations = new ArrayList<Reservation>();
 
-            RoomsReservationsDatabase
-                    .getInstance()
+            roomsReservationsDatabase
                     .values()
                     .forEach(reservation -> {
                         reservations.addAll(reservation);
@@ -37,12 +44,12 @@ public class ReservationService {
     }
 
     public Collection<IRoom> getAllRooms() {
-        return RoomDatabase.getInstance().values();
+        return roomDatabase.values();
     }
 
     public void addRoom(IRoom room) throws Exception {
         try {
-            RoomDatabase.getInstance().addRoom(room);
+            roomDatabase.addRoom(room);
         } catch (IllegalArgumentException e) {
             throw e;
         }
@@ -63,7 +70,7 @@ public class ReservationService {
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         try {
-            return RoomsReservationsDatabase.getInstance().addReservation(customer, room, checkInDate, checkOutDate);
+            return roomsReservationsDatabase.addReservation(customer, room, checkInDate, checkOutDate);
 
         } catch (Exception e) {
             throw e;
@@ -72,7 +79,7 @@ public class ReservationService {
 
     public IRoom getARoom(String roomId) {
         try {
-            return RoomDatabase.getInstance().get(roomId);
+            return roomDatabase.get(roomId);
         } catch (Exception e) {
             throw e;
         }
@@ -89,7 +96,7 @@ public class ReservationService {
         }
 
         try {
-            return RoomsReservationsDatabase.getInstance().findRooms(checkInDate, checkOutDate);
+            return roomsReservationsDatabase.findRooms(checkInDate, checkOutDate);
         } catch (Exception e) {
             throw e;
         }
