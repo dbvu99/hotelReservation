@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class CustomerDatabase extends HashMap<String, Customer> {
     private static final long serialVersionUID = 1L;
-    private static CustomerDatabase instance = new CustomerDatabase();
-    
+    private static CustomerDatabase instance = null;
+
     private CustomerDatabase() {
         super();
     }
-    
+
     public static CustomerDatabase getInstance() {
-        return instance;
+        return instance != null ? instance : new CustomerDatabase();
     }
 
     public Customer getCustomer(String email) {
@@ -36,4 +36,3 @@ public class CustomerDatabase extends HashMap<String, Customer> {
         }
     }
 }
-    
