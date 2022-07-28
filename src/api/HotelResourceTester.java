@@ -8,8 +8,9 @@ import model.RoomType;
 import service.ReservationService;
 
 public class HotelResourceTester {
+
     public static void main(String[] args) throws Exception {
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         ReservationService reservationService = ReservationService.getInstance();
         Customer customer = new Customer("John", "Doe", "j@d.com");
@@ -26,32 +27,26 @@ public class HotelResourceTester {
             System.out.println(hotelResource.reserveARoom(
                     customer,
                     reservationService.getARoom("100"),
-                    sdf.parse("7/23/2022"), sdf.parse("8/23/2022")
-            ));
+                    sdf.parse("7/23/2022"), sdf.parse("8/23/2022")));
 
             System.out.println(hotelResource.reserveARoom(
                     customer,
                     reservationService.getARoom("100"),
-                    sdf.parse("7/24/2022"), sdf.parse("8/23/2022")
-            ));
+                    sdf.parse("7/24/2022"), sdf.parse("8/23/2022")));
 
             System.out.println(hotelResource.reserveARoom(
                     customer,
                     reservationService.getARoom("100"),
-                    sdf.parse("7/23/2022"), sdf.parse("8/22/2022")
-            ));
+                    sdf.parse("7/23/2022"), sdf.parse("8/22/2022")));
             System.out.println(hotelResource.reserveARoom(
                     customer,
                     reservationService.getARoom("100"),
-                    sdf.parse("7/25/2022"), sdf.parse("8/02/2022")
-            ));
-
+                    sdf.parse("7/25/2022"), sdf.parse("8/02/2022")));
 
             System.out.println(hotelResource.reserveARoom(
                     customer,
                     reservationService.getARoom("100"),
-                    sdf.parse("7/12/2022"), sdf.parse("7/20/2022")
-            ));
+                    sdf.parse("7/12/2022"), sdf.parse("7/20/2022")));
 
             System.out.println("reservations");
             reservationService.getAllReserviations().forEach(reservation -> {
@@ -66,10 +61,6 @@ public class HotelResourceTester {
             reservationService.findRooms(sdf.parse("7/29/2022"), sdf.parse("8/29/2022")).forEach(room -> {
                 System.out.println(room);
             });
-
-                
-
-
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
