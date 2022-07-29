@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class RoomDatabase extends HashMap<String, IRoom> {
@@ -8,6 +9,10 @@ public class RoomDatabase extends HashMap<String, IRoom> {
 
     private RoomDatabase() {
         super();
+    }
+
+    public Collection<IRoom> getAllRooms() {
+        return this.values();
     }
 
     public static RoomDatabase getInstance() {

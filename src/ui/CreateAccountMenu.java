@@ -9,9 +9,8 @@ import model.Menu;
 public class CreateAccountMenu extends Menu implements IMenu {
 
     private String firstName = "";
-    private String lastName  = "";
+    private String lastName = "";
     private String email = "";
-
 
     public CreateAccountMenu() {
         super();
@@ -39,7 +38,6 @@ public class CreateAccountMenu extends Menu implements IMenu {
 
     }
 
-
     @Override
     public void run(Scanner scanner) {
         while (isRunning) {
@@ -61,7 +59,7 @@ public class CreateAccountMenu extends Menu implements IMenu {
                         lastName = scanner.nextLine();
                         break;
                     case 3:
-                        System.out.print("Enter your email: ");
+                        System.out.print("Enter your email (mail@domain.com): ");
                         scanner = new Scanner(System.in);
                         email = scanner.nextLine();
                         break;

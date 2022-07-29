@@ -9,6 +9,7 @@ import model.Reservation;
 public class MainMenu {
 
     private static boolean isRunning = true;
+    private static HotelResource hotelResource = HotelResource.getInstance();
 
     public void displayHome() {
 
@@ -65,7 +66,7 @@ public class MainMenu {
 
         while (isRunningOption2) {
             System.out.println("");
-            System.out.println("Please enter your email address: ");
+            System.out.println("Please enter your email address (mail@domain.com): ");
             scanner.nextLine();
             try {
                 String email = scanner.nextLine();
@@ -76,11 +77,11 @@ public class MainMenu {
                     System.out.println("Your reservations: ");
                     System.out.println("");
 
-                    Collection<Reservation> reservations = HotelResource.getInstance().getCustomersReservations(email);
+                    Collection<Reservation> reservations = hotelResource.getCustomersReservations(email);
                     if (reservations.isEmpty()) {
                         System.out.println("You have no reservations!");
                     } else {
-                        HotelResource.getInstance().getCustomersReservations(email).forEach(System.out::println);
+                        hotelResource.getCustomersReservations(email).forEach(System.out::println);
                         System.out.println("");
                     }
                     isRunningOption2 = false;

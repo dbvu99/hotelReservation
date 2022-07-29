@@ -13,6 +13,8 @@ import model.Room;
 import model.RoomType;
 
 public class AdminMenu extends Menu implements IMenu {
+    AdminResource adminResource = AdminResource.getInstance();
+
     public AdminMenu() {
         super();
     }
@@ -29,7 +31,6 @@ public class AdminMenu extends Menu implements IMenu {
         System.out.println("________________________________________________");
         System.out.print("Enter your option: ");
     }
-    
 
     @Override
     public void run(Scanner scanner) {
@@ -69,10 +70,10 @@ public class AdminMenu extends Menu implements IMenu {
     private void displayAllRooms() {
         System.out.println("");
         System.out.println("All rooms");
-        if (AdminResource.getInstance().getAllRooms().size() == 0) {
+        if (adminResource.getAllRooms().size() == 0) {
             System.out.println("No rooms found");
         } else {
-            for (IRoom room : AdminResource.getInstance().getAllRooms()) {
+            for (IRoom room : adminResource.getAllRooms()) {
                 System.out.println(room);
             }
         }
@@ -80,16 +81,16 @@ public class AdminMenu extends Menu implements IMenu {
     }
 
     private void displayAllCustomers() {
-        Collection<Customer> customers = AdminResource.getInstance().getAllCustomers();
+        Collection<Customer> customers = adminResource.getAllCustomers();
         if (customers.size() == 0) {
             System.out.println("No customers found");
         } else {
-            AdminResource.getInstance().getAllCustomers().forEach(customer -> System.out.println(customer));
+            adminResource.getAllCustomers().forEach(customer -> System.out.println(customer));
         }
     }
 
     private void displayAllReservations() {
-        AdminResource.getInstance().displayAllReservations();
+        adminResource.displayAllReservations();
     }
-    
+
 }

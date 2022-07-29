@@ -1,8 +1,10 @@
 package ui;
 
+import java.net.CacheRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
@@ -14,17 +16,17 @@ import model.IMenu;
 import model.IRoom;
 import model.Menu;
 import model.Reservation;
-import model.Room;
 import service.ReservationService;
 
 public class FindAndReserveARoomMenu extends Menu implements IMenu {
 
     private Date checkInDate = null;
     private Date checkOutDate = null;
-    private ArrayList<IRoom> availableRooms = new ArrayList<>(0);
 
     private final String DATE_FORMAT_PATTERN = "M/d/yyyy";
     private final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT_PATTERN);
+
+    private HotelResource hotelResource = HotelResource.getInstance();
 
     public FindAndReserveARoomMenu() {
         super();
@@ -47,11 +49,12 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                 return;
             }
 
-            ArrayList<IRoom> availableRooms = (ArrayList<IRoom>) HotelResource.getInstance().findRooms(checkInDate,
+            ArrayList<IRoom> availableRooms = (ArrayList<IRoom>) hotelResource.findRooms(checkInDate,
                     checkOutDate);
 
             if (availableRooms.size() == 0) {
                 System.out.println("- No rooms are available for the specified dates.");
+                displayRecommendedRooms();
                 return;
             } else {
                 for (IRoom room : availableRooms) {
@@ -64,6 +67,29 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void displayRecommendedRooms() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(checkInDate);
+        calendar.add(Calendar.DATE, 7);
+        Date recommendedCheckIndate = calendar.getTime();
+        calendar.setTime(checkOutDate);
+        calendar.add(Calendar.DATE, 7);
+        Date recommendedCheckOutDate = calendar.getTime();
+
+        System.out.print(String.format("Room availble for the following dates: %s - %s",
+                DATE_FORMATTER.format(recommendedCheckIndate), DATE_FORMATTER.format(recommendedCheckOutDate)));
+        Collection<IRoom> recommendedRooms = hotelResource.findRooms(recommendedCheckIndate, recommendedCheckOutDate);
+
+        if (recommendedRooms.isEmpty()) {
+            System.out.println("- No rooms are available for the recommended dates.");
+        } else {
+            System.out.println("- Recommended rooms:");
+            for (IRoom room : recommendedRooms) {
+                System.out.println(room);
+            }
+        }
     }
 
     private void displayMenu() {
@@ -120,7 +146,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                             break;
                         }
 
-                        room = HotelResource.getInstance().getARoom(roomNumber + "");
+                        room = hotelResource.getARoom(roomNumber + "");
                         if (room == null) {
                             System.out.println("- Room number " + roomNumber + " does not exist. Try again.");
                             isRunningRoom = true;
@@ -149,7 +175,7 @@ public class FindAndReserveARoomMenu extends Menu implements IMenu {
                             break;
                         }
 
-                        customer = HotelResource.getInstance().getCustomer(customerEmail);
+                        customer = hotelResource.getCustomer(customerEmail);
                         if (customer == null) {
                             System.out.println(
                                     "- Customer with email " +

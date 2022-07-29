@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrderedList> {
     private static final long serialVersionUID = 1L;
     private static RoomsReservationsDatabase instance = null;
+    // private static RoomDatabase roomDatabase = RoomDatabase.getInstance();
 
     private RoomsReservationsDatabase() {
         super();
@@ -48,6 +49,7 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
     }
 
     public boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
+        // System.out.println(room.getRoomNumber());
         try {
             ReservationOrderedList reservations = this.get(room);
 
@@ -55,22 +57,21 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
                 return true;
             }
 
-            // System.out.println("Size: " + reservations.size());
-
             return reservations.isNotOverlapped(checkInDate, checkOutDate);
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        // System.out.println("Find rooms " + checkInDate + " " + checkOutDate);
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate, Collection<IRoom> roomDatabase) {
+        // System.out.println(roomDatabase.values());
         try {
 
             Collection<IRoom> rooms = new ArrayList<IRoom>();
 
-            for (IRoom room : RoomDatabase.getInstance().values()) {
-                if (this.isRoomAvailable(room, checkInDate, checkOutDate)) {
+            for (IRoom room : roomDatabase) {
+                // System.out.println(room.getRoomNumber());
+                if (isRoomAvailable(room, checkInDate, checkOutDate)) {
                     rooms.add(room);
                 }
             }

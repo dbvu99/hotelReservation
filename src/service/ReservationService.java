@@ -95,8 +95,13 @@ public class ReservationService {
             throw new Exception("Check-in date must happen after today");
         }
 
+        // System.out.println("rooms");
+        // this.getAllRooms().forEach(room -> {
+        // System.out.println(room);
+        // });
+
         try {
-            return roomsReservationsDatabase.findRooms(checkInDate, checkOutDate);
+            return roomsReservationsDatabase.findRooms(checkInDate, checkOutDate, roomDatabase.getAllRooms());
         } catch (Exception e) {
             throw e;
         }
