@@ -4,13 +4,10 @@ import java.util.Collection;
 import java.util.Scanner;
 
 import api.AdminResource;
-import api.HotelResource;
 import model.Customer;
 import model.IMenu;
 import model.IRoom;
 import model.Menu;
-import model.Room;
-import model.RoomType;
 
 public class AdminMenu extends Menu implements IMenu {
     AdminResource adminResource = AdminResource.getInstance();
@@ -85,7 +82,7 @@ public class AdminMenu extends Menu implements IMenu {
         if (customers.size() == 0) {
             System.out.println("No customers found");
         } else {
-            adminResource.getAllCustomers().forEach(customer -> System.out.println(customer));
+            customers.forEach(customer -> System.out.println(customer));
         }
     }
 

@@ -34,7 +34,8 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
                 i++;
             }
 
-            if (this.get(i).isAfterDate(checkOutDate)) {
+            if (this.get(i).isAfterDate(checkOutDate) || i == this.size()
+                    && this.get(i - 1).isBeforeDate(checkInDate)) {
                 Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
                 this.add(i, reservation);
                 return reservation;
@@ -49,11 +50,16 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
     }
 
     public boolean isNotOverlapped(Date checkInDate, Date checkOutDate) {
+        // System.out.println(roomDatabase);
         try {
             int i = 0;
 
             while (i <= this.size() - 1 && this.get(i).isBeforeDate(checkInDate)) {
                 i++;
+            }
+
+            if (i == this.size() && this.get(i - 1).isBeforeDate(checkInDate)) {
+                return true;
             }
 
             if (this.get(i).isAfterDate(checkOutDate)) {
@@ -65,6 +71,7 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
         } catch (Exception e) {
             throw e;
         }
+
     }
 
 }

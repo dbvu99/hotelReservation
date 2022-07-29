@@ -11,6 +11,7 @@ public class CreateAccountMenu extends Menu implements IMenu {
     private String firstName = "";
     private String lastName = "";
     private String email = "";
+    private HotelResource hotelResource = HotelResource.getInstance();
 
     public CreateAccountMenu() {
         super();
@@ -65,7 +66,7 @@ public class CreateAccountMenu extends Menu implements IMenu {
                         break;
                     case 4:
                         try {
-                            HotelResource.getInstance().createACustomer(firstName, lastName, email);
+                            hotelResource.createACustomer(firstName, lastName, email);
                             firstName = "";
                             lastName = "";
                             email = "";

@@ -20,6 +20,10 @@ public class ReservationService {
         super();
     }
 
+    RoomDatabase getRoomDatabase() {
+        return roomDatabase;
+    }
+
     public static ReservationService getInstance() {
         return instance == null ? new ReservationService() : instance;
     }
@@ -86,6 +90,8 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) throws Exception {
+        // System.out.println(checkInDate);
+        // System.out.println(checkOutDate);
 
         if (checkInDate.after(checkOutDate)) {
             throw new Exception("Check-in date must happen before check-out date");

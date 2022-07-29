@@ -1,7 +1,6 @@
 package model;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class CustomerDatabase extends HashMap<String, Customer> {
     private static final long serialVersionUID = 1L;
