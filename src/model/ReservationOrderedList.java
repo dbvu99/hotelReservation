@@ -34,8 +34,8 @@ public class ReservationOrderedList extends ArrayList<Reservation> {
                 i++;
             }
 
-            if (this.get(i).isAfterDate(checkOutDate) || i == this.size()
-                    && this.get(i - 1).isBeforeDate(checkInDate)) {
+            if (i == this.size()
+                    && this.get(i - 1).isBeforeDate(checkInDate) || this.get(i).isAfterDate(checkOutDate)) {
                 Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
                 this.add(i, reservation);
                 return reservation;
