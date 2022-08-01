@@ -90,8 +90,6 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) throws Exception {
-        // System.out.println(checkInDate);
-        // System.out.println(checkOutDate);
 
         if (checkInDate.after(checkOutDate)) {
             throw new Exception("Check-in date must happen before check-out date");
@@ -100,11 +98,6 @@ public class ReservationService {
         if (checkInDate.before(new Date())) {
             throw new Exception("Check-in date must happen after today");
         }
-
-        // System.out.println("rooms");
-        // this.getAllRooms().forEach(room -> {
-        // System.out.println(room);
-        // });
 
         try {
             return roomsReservationsDatabase.findRooms(checkInDate, checkOutDate, roomDatabase.getAllRooms());

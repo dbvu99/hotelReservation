@@ -64,13 +64,11 @@ public class RoomsReservationsDatabase extends HashMap<IRoom, ReservationOrdered
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate, Collection<IRoom> roomDatabase) {
-        // System.out.println(roomDatabase.values());
         try {
 
             Collection<IRoom> rooms = new ArrayList<IRoom>();
 
             for (IRoom room : roomDatabase) {
-                // System.out.println(room.getRoomNumber());
                 if (isRoomAvailable(room, checkInDate, checkOutDate)) {
                     rooms.add(room);
                 }
